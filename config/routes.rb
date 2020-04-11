@@ -20,5 +20,6 @@ Rails.application.routes.draw do
   resources :relationships,       only: [:create, :destroy]
   namespace :api, format: "json" do
     resources :sessions, only: [:index]
+    delete '/logout',  to: 'sessions#destroy'
   end
 end
