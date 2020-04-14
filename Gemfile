@@ -7,8 +7,8 @@ gem 'mini_magick',                '4.9.5'
 gem 'active_storage_validations', '0.8.2'
 gem 'bcrypt',                     '3.1.13'
 gem 'faker',                      '2.1.2'
-gem 'will_paginate',              '3.1.8'
-gem 'bootstrap-will_paginate',    '1.0.0'
+gem 'kaminari'
+gem 'kaminari-bootstrap'
 gem 'bootstrap-sass',             '3.4.1'
 gem 'puma',                       '4.3.3'
 gem 'sass-rails',                 '5.1.0'
@@ -19,7 +19,7 @@ gem 'bootsnap',                   '1.4.5', require: false
 
 group :development, :test do
   gem 'sqlite3', '1.4.1'
-  gem 'byebug',  '11.0.1', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry-byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
 group :development do
