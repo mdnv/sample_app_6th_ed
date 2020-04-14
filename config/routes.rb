@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :microposts,          only: [:create, :destroy]
   resources :relationships,       only: [:create, :destroy]
   namespace :api, format: "json" do
+    root   'static_pages#home'
     resources :sessions, only: [:index]
     delete '/logout',  to: 'sessions#destroy'
     post   '/login',   to: 'sessions#create'
