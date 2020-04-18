@@ -20,9 +20,10 @@ Rails.application.routes.draw do
   resources :relationships,       only: [:create, :destroy]
   namespace :api, format: "json" do
     root   'static_pages#home'
-    resources :sessions, only: [:index]
-    delete '/logout',  to: 'sessions#destroy'
-    post   '/login',   to: 'sessions#create'
-    resources :users, only: [:index, :create, :destroy]
+    resources :sessions,          only: [:index]
+    delete '/logout',             to: 'sessions#destroy'
+    post   '/login',              to: 'sessions#create'
+    resources :users,             only: [:index, :show, :create, :destroy]
+    resources :relationships,     only: [:create, :destroy]
   end
 end

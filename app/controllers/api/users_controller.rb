@@ -4,6 +4,10 @@ class Api::UsersController < Api::ApiController
   def index
     @users = User.page(params[:page])
   end
+  def show
+    @user = User.find(params[:id])
+    @microposts = @user.microposts.page(params[:page])
+  end
   def create
     @user = User.new(user_params)
     if @user.save
