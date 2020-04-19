@@ -1,5 +1,7 @@
 class Api::UsersController < Api::ApiController
-  before_action :logged_in_user, only: [:index, :destroy]
+  before_action :logged_in_user, only: [:index, :update, :destroy,
+                                        :following, :followers]
+  before_action :correct_user,   only: [:update]
   before_action :admin_user,     only: :destroy
   def index
     @users = User.page(params[:page])
@@ -21,9 +23,23 @@ class Api::UsersController < Api::ApiController
       render json: { error: @user.errors.full_messages }
     end
   end
+  def update
+    @user = User.find(params[:id])
+    render json: { flash: ["success", "Profile updated"] } if @user.update(user_params)
+  end
   def destroy
     User.find(params[:id]).destroy
     render json: { flash: ["success", "User deleted"] }
+  end
+  def following
+    @user  = User.find(params[:id])
+    @users = @user.following.page(params[:page])
+    @xusers = @user.following
+  end
+  def followers
+    @user  = User.find(params[:id])
+    @users = @user.followers.page(params[:page])
+    @xusers = @user.followers
   end
   private
     def user_params
@@ -31,10 +47,13 @@ class Api::UsersController < Api::ApiController
                                    :password_confirmation)
     end
     # Before filters
+    # Confirms the correct user.
+    def correct_user
+      @user = User.find(params[:id])
+      render json: { flash: ["info", "User aren't Current User"] } unless current_user?(@user)
+    end
     # Confirms an admin user.
     def admin_user
-      unless current_user.admin?
-        render json: { flash: ["info", "Current User aren't admin"] }
-      end
+      render json: { flash: ["info", "Current User aren't Admin"] } unless current_user.admin?
     end
 end
