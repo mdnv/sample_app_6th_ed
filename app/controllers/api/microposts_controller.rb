@@ -13,8 +13,7 @@ class Api::MicropostsController < Api::ApiController
   end
   def destroy
     @micropost.destroy
-    flash[:success] = "Micropost deleted"
-    redirect_to request.referrer || root_url
+    render json: { flash: ["success", "Micropost deleted"] }
   end
   private
     def micropost_params
