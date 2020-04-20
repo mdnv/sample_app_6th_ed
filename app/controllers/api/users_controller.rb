@@ -1,7 +1,7 @@
 class Api::UsersController < Api::ApiController
-  before_action :logged_in_user, only: [:index, :update, :destroy,
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy,
                                         :following, :followers]
-  before_action :correct_user,   only: [:update]
+  before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
   def index
     @users = User.page(params[:page])
@@ -23,9 +23,20 @@ class Api::UsersController < Api::ApiController
       render json: { error: @user.errors.full_messages }
     end
   end
+  def edit
+    @user = User.find(params[:id])
+    render json: {
+      user: @user,
+      gravatar: Digest::MD5::hexdigest(@user.email.downcase)
+    }
+  end
   def update
     @user = User.find(params[:id])
-    render json: { flash: ["success", "Profile updated"] } if @user.update(user_params)
+    if @user.update(user_params)
+      render json: { flash_success: ["success", "Profile updated"] }
+    else
+      render json: { error: @user.errors.full_messages }
+    end
   end
   def destroy
     User.find(params[:id]).destroy
