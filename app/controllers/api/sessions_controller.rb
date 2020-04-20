@@ -1,6 +1,10 @@
 class Api::SessionsController < Api::ApiController
   def index
-    render json: { user: current_user } if current_user
+    if current_user
+      render json: { user: current_user }
+    else
+      head :ok
+    end
   end
   def create
     user = User.find_by(email: params[:session][:email].downcase)
@@ -20,5 +24,6 @@ class Api::SessionsController < Api::ApiController
   end
   def destroy
     log_out if logged_in?
+    head :ok
   end
 end

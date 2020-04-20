@@ -1,5 +1,13 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
+    origins 'http://localhost:3000'
+
+    resource '*',
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head], credentials: true
+  end
+
+  allow do
     origins 'http://localhost:3001'
 
     resource '*',
@@ -8,7 +16,15 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   end
 
   allow do
-    origins 'https://clotheshub.herokuapp.com'
+    origins 'https://railstutorialreact.herokuapp.com'
+
+    resource '*',
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head], credentials: true
+  end
+
+  allow do
+    origins 'http://railstutorialreact.herokuapp.com'
 
     resource '*',
       headers: :any,
