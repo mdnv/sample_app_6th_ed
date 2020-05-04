@@ -34,3 +34,12 @@ following = users[2..50]
 followers = users[3..40]
 following.each { |followed| user.follow(followed) }
 followers.each { |follower| follower.follow(user) }
+
+# Create a main sample user.
+User.create!(name:  "Test User",
+             email: "test@example.com",
+             password:              "123456",
+             password_confirmation: "123456",
+             admin:     true,
+             activated: true,
+             activated_at: Time.zone.now)
