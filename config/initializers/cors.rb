@@ -24,7 +24,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   end
 
   allow do
-    origins 'http://railstutorialreact.herokuapp.com'
+    origins 'https://boiling-depths-89533.herokuapp.com'
 
     resource '*',
       headers: :any,

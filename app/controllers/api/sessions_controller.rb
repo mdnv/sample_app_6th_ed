@@ -13,8 +13,7 @@ class Api::SessionsController < Api::ApiController
         log_in user
         params[:session][:remember_me] == '1' ? remember(user) : forget(user)
         render json: {
-          user: user,
-          flash_success: ["success", "log in completed"]
+          user: user
         }
       else
         message  = "Account not activated. "

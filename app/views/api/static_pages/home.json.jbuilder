@@ -6,6 +6,7 @@ json.feed_items do
     json.gravatar_id Digest::MD5::hexdigest(i.user.email.downcase)
     json.size 50
     json.content i.content
+    json.image "#{request.ssl? ? 'https' : 'http'}://#{request.env['HTTP_HOST']}"+url_for(i.image) if i.image.attached?
     json.timestamp time_ago_in_words(i.created_at)
   end
 end
